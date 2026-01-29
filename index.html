@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error</title>
+
+  <!-- Mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #1a1a1a;
+      color: #ff6b6b;
+      font-family: "Courier New", monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      transition: background 1s;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    #error, #countdown, #surprise {
+      display: none;
+    }
+
+    #error {
+      display: block;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    p {
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      opacity: 0.85;
+    }
+
+    #countdown {
+      font-size: clamp(3rem, 12vw, 5rem);
+      color: #ffb3c6;
+    }
+
+    #surprise h1 {
+      font-size: clamp(3rem, 10vw, 5rem);
+      animation: rainbow 2s infinite alternate;
+      font-family: "Poppins", "Comic Sans MS", cursive;
+    }
+
+    @keyframes rainbow {
+      0% { color: #ff4d6d; }
+      25% { color: #ff85a1; }
+      50% { color: #ffb3c6; }
+      75% { color: #c77dff; }
+      100% { color: #4d96ff; }
+    }
+
+    .love {
+      position: absolute;
+      font-size: clamp(1rem, 4vw, 1.6rem);
+      pointer-events: none;
+      animation: floatUp 3s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-160px) scale(1.5);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="error">
+    <h1>⚠️ 404 – Page Failed to Load</h1>
+    <p>Unexpected error occurred.</p>
+    <p>Attempting automatic repair…</p>
+  </div>
+
+  <div id="countdown">3</div>
+
+  <div id="surprise">
+    <h1>I love you 💕</h1>
+    <p style="font-size:1.4rem;">Surprise, baby 😘</p>
+  </div>
+
+  <script>
+    const messages = [
+      "I love you Tamara 💖",
+      "You're beautiful baby ❤️",
+      "So so so much ❤️",
+      "Forever & always 💞",
+      "I love you my beautiful girl 💘"
+    ];
+
+    setTimeout(() => {
+      document.getElementById("error").style.display = "none";
+      document.getElementById("countdown").style.display = "block";
+
+      let count = 3;
+      const timer = setInterval(() => {
+        count--;
+        document.getElementById("countdown").innerText = count;
+
+        if (count === 0) {
+          clearInterval(timer);
+          startSurprise();
+        }
+      }, 1000);
+    }, 2500);
+
+    function startSurprise() {
+      document.body.style.background =
+        "linear-gradient(135deg, #ffd1dc, #ffe6f0)";
+      document.body.style.color = "#000";
+
+      document.getElementById("countdown").style.display = "none";
+      document.getElementById("surprise").style.display = "block";
+
+      setInterval(() => {
+        const love = document.createElement("div");
+        love.className = "love";
+        love.innerText = messages[Math.floor(Math.random() * messages.length)];
+        love.style.left = Math.random() * 100 + "vw";
+        love.style.bottom = "0px";
+        love.style.color = `hsl(${Math.random() * 360}, 80%, 65%)`;
+
+        document.body.appendChild(love);
+        setTimeout(() => love.remove(), 3000);
+      }, 200);
+    }
+  </script>
+
+</body>
+</html>
